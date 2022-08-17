@@ -7,8 +7,8 @@ import convertToHr from "./helper";
 export default class TimersDashboard extends React.Component {
 	render() {
 		return(
-			<div className="max-w-sm mx-auto mt-8 border border-black border-solid rounded-lg">
-				<h2 className="mx-auto mt-4 text-3xl max-w-max">Timers</h2>
+			<div className="max-w-sm mx-auto mt-8 font-serif">
+				<h2 className="mx-auto my-5 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-10 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
 				<TimerList />
 				<ToggleableTimerForm isOpen={true} />
 			</div>
