@@ -7,7 +7,7 @@ import convertToHr from "./helper";
 export default class TimersDashboard extends React.Component {
 	render() {
 		return(
-			<div className="max-w-xs mx-auto mt-8 font-serif">
+			<div className="max-w-xs mx-auto mt-8 mb-12 font-serif">
 				<h2 className="mx-auto my-5 mb-12 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-11 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
 				<TimerList />
 				<ToggleableTimerForm isOpen={false} />
@@ -51,7 +51,9 @@ class ToggleableTimerForm extends React.Component {
 			)
 		} else {
 			return (
-				<button><AiOutlinePlus /></button>
+				<div className="flex justify-center max-w-sm p-4 mt-3 border border-gray-400 border-solid rounded-md">
+					<button><AiOutlinePlus /></button>
+				</div>
 			)
 		}
 	}
@@ -117,7 +119,7 @@ class TimerForm extends React.Component {
 				/>
 				<div className="flex">
 					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:shadow-md">{btnText}</button>
-					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-red-700 border-solid gap-2 rounded-md hover:border-red-900 hover:shadow-md">Cancel</button>
+					<button className="w-2/4 p-2 py-1 mt-3 text-red-700 border border-red-700 border-solid gap-2 rounded-md hover:border-red-900 hover:shadow-md">Cancel</button>
 				</div>
 			</div>
 		);
