@@ -7,8 +7,8 @@ import convertToHr from "./helper";
 export default class TimersDashboard extends React.Component {
 	render() {
 		return(
-			<div className="max-w-sm mx-auto mt-8 font-serif">
-				<h2 className="mx-auto my-5 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-10 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
+			<div className="max-w-xs mx-auto mt-8 font-serif">
+				<h2 className="mx-auto my-5 mb-12 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-11 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
 				<TimerList />
 				<ToggleableTimerForm isOpen={true} />
 			</div>
@@ -81,15 +81,15 @@ class EditTimer extends React.Component {
 class Timer extends React.Component {
 	render() {
 		return (
-			<div>
-				<h3>{this.props.title}</h3>
-				<h3>{this.props.project}</h3>
-				<h3>{convertToHr(this.props.elapsed)}</h3>
-				<div>
+			<div className="max-w-sm p-4 mt-3 border border-gray-400 border-solid rounded-md">
+				<h3 className="text-xl font-bold">{this.props.title}</h3>
+				<h4 className="font-thin text-gray-500">{this.props.project}</h4>
+				<h3 className="mx-auto text-2xl text-gray-700 max-w-fit">{convertToHr(this.props.elapsed)}</h3>
+				<div className="flex justify-end gap-1">
 					<RiDeleteBin5Fill />
 					<FaEdit />
 				</div>
-				<button>Start</button>
+				<button className="w-full p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:text-blue-900 hover:shadow-md">Start</button>
 			</div>
 		);
 	}
