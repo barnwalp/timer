@@ -10,7 +10,7 @@ export default class TimersDashboard extends React.Component {
 			<div className="max-w-xs mx-auto mt-8 font-serif">
 				<h2 className="mx-auto my-5 mb-12 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-11 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
 				<TimerList />
-				<ToggleableTimerForm isOpen={true} />
+				<ToggleableTimerForm isOpen={false} />
 			</div>
 		)
 	}
@@ -100,23 +100,25 @@ class TimerForm extends React.Component {
 		let btnText;
 		(this.props.title) ? (btnText="Update") : (btnText="Create")
 		return (
-			<div>
-				<label htmlFor="title">Title</label>
-				<input 
+			<div className="flex flex-col p-4 mt-3 border border-gray-400 border-solid rounded-md">
+				<label className="text-gray-700 text-md" htmlFor="title">Title</label>
+				<input className="p-2 border border-solid"
 					type="text"
 					name="title"
 					placeholder="Title"
 					value={this.props.title}
 				/>
-				<label htmlFor="project">Project</label>
-				<input 
+				<label className="mt-2 text-md text-gray" htmlFor="project">Project</label>
+				<input className="p-2 border border-solid"
 					type="text"
 					name="project"
 					placeholder="Project"
 					value={this.props.project}
 				/>
-				<button>{btnText}</button>
-				<button>Cancel</button>
+				<div className="flex">
+					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:shadow-md">{btnText}</button>
+					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-red-700 border-solid gap-2 rounded-md hover:border-red-900 hover:shadow-md">Cancel</button>
+				</div>
 			</div>
 		);
 	}
