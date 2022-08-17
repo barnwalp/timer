@@ -12,4 +12,5 @@ const convertToHr = (seconds) => {
 	return `${hours}:${minutes}:${seconds}`
 }
 
-console.log(convertToHr(184957));
+export default convertToHr;
+// console.log(convertToHr(184957));
