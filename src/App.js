@@ -49,3 +49,21 @@ class ToggleableTimerForm extends React.Component {
 		}
 	}
 }
+
+class EditTimer extends React.Component {
+	render() {
+		if (this.props.editForOpen) {
+			return(
+				<TimerForm />
+			)
+		} else {
+			<Timer 
+				title={this.props.title}
+				project={this.props.title}
+				elapsed={this.props.elapsed}
+				runningSince={this.props.runningSince}
+			/>
+		}
+	}
+}
+
