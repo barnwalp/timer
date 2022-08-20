@@ -3,13 +3,38 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FaEdit } from "react-icons/fa";
 import convertToHr from "./helper";
+import { v4 as uuidv4 } from 'uuid';
 
 export default class TimersDashboard extends React.Component {
+	state = {
+		timers: [
+			{
+				title: 'Swimming otters',
+				project: 'Cicus',
+				id: uuidv4(),
+				elapsed: 546792,
+			},
+			{
+				title: 'Wash Raccons',
+				project: 'Racoon federation',
+				id: uuidv4(),
+				elapsed: 446792,
+			},
+			{
+				title: 'slap away',
+				project: 'Angry cats',
+				id: uuidv4(),
+				elapsed: 346792,
+			},
+		]
+	}
 	render() {
 		return(
 			<div className="max-w-xs mx-auto mt-8 mb-12 font-serif">
 				<h2 className="mx-auto my-5 mb-12 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-11 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
-				<TimerList />
+				<TimerList 
+					timers={this.state.timers}
+				/>
 				<ToggleableTimerForm isOpen={false} />
 			</div>
 		)
@@ -18,26 +43,18 @@ export default class TimersDashboard extends React.Component {
 
 class TimerList extends React.Component {
 	render() {
+		const timers = this.props.timers.map((timer) => (
+			<EditTimer
+				key={timer.id}
+				id={timer.id}
+				title={timer.title}
+				project={timer.project}
+				elapsed={timer.elapsed}
+			/>
+		))
 		return (
 			<div>
-				<EditTimer 
-					title="Learn React"
-					project="Web Developement"
-					elapsed="298923"
-					editForOpen={false}
-				/>	
-				<EditTimer 
-					title="Guitar"
-					project="Music"
-					elapsed="194856"
-					editForOpen={false}
-				/>	
-				<EditTimer 
-					title="Swimming"
-					project="Olympic"
-					elapsed="294856"
-					editForOpen={true}
-				/>	
+				{timers}
 			</div>
 		);
 	}
