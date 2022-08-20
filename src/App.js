@@ -149,6 +149,22 @@ class TimerForm extends React.Component {
 			project: this.props.project || '',
 		}
 	}
+	handleTitleChange = (e) => {
+		this.setState((timer) => {
+			return({
+				...timer,
+				title: e.target.value,
+			});
+		});
+	}
+	handleProjectChange = (e) => {
+		this.setState((timer) => {
+			return({
+				...timer,
+				project: e.target.value,
+			});
+		});
+	}
 	render() {
 		let btnText;
 		(this.props.title) ? (btnText="Update") : (btnText="Create")
@@ -160,6 +176,7 @@ class TimerForm extends React.Component {
 					name="title"
 					placeholder="Title"
 					value={this.state.title}
+					onChange={this.handleTitleChange}
 				/>
 				<label className="mt-2 text-md text-gray" htmlFor="project">Project</label>
 				<input className="p-2 border border-solid"
@@ -167,6 +184,7 @@ class TimerForm extends React.Component {
 					name="project"
 					placeholder="Project"
 					value={this.state.project}
+					onChange={this.handleProjectChange}
 				/>
 				<div className="flex">
 					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:shadow-md">{btnText}</button>
