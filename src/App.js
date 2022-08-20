@@ -15,18 +15,21 @@ export default class TimersDashboard extends React.Component {
 					project: 'Cicus',
 					id: uuidv4(),
 					elapsed: 546792,
+					editFormOpen: false,
 				},
 				{
 					title: 'Wash Raccons',
 					project: 'Racoon federation',
 					id: uuidv4(),
 					elapsed: 446792,
+					editFormOpen: false,
 				},
 				{
 					title: 'slap away',
 					project: 'Angry cats',
 					id: uuidv4(),
 					elapsed: 346792,
+					editFormOpen: true,
 				},
 			]
 		}
@@ -53,6 +56,7 @@ class TimerList extends React.Component {
 				title={timer.title}
 				project={timer.project}
 				elapsed={timer.elapsed}
+				editFormOpen={timer.editFormOpen}
 			/>
 		))
 		return (
@@ -67,18 +71,30 @@ class ToggleableTimerForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isOpen: false,
+			isOpen: true,
 		}
+	}
+	handleFormToggle = () => {
+		this.setState((curFlag) => {
+			return {
+				isOpen: !curFlag.isOpen,
+			}
+		});
 	}
 	render() {
 		if (this.state.isOpen) {
 			return (
-				<TimerForm />
+				<TimerForm 
+					id={this.props.id}
+					title={this.props.title}
+					project={this.props.project}
+					handleClick={this.handleFormToggle}
+				/>
 			)
 		} else {
 			return (
 				<div className="flex justify-center max-w-sm p-4 mt-3 border border-gray-400 border-solid rounded-md">
-					<button><AiOutlinePlus /></button>
+					<button onClick={this.handleFormToggle}><AiOutlinePlus /></button>
 				</div>
 			)
 		}
@@ -86,14 +102,8 @@ class ToggleableTimerForm extends React.Component {
 }
 
 class EditTimer extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			editFormOpen: false,
-		}
-	}
 	render() {
-		if (this.state.editFormOpen) {
+		if (this.props.editFormOpen) {
 			return(
 				<TimerForm
 					id={this.props.id}
@@ -132,6 +142,13 @@ class Timer extends React.Component {
 }
 
 class TimerForm extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			title: this.props.title || '',
+			project: this.props.project || '',
+		}
+	}
 	render() {
 		let btnText;
 		(this.props.title) ? (btnText="Update") : (btnText="Create")
@@ -142,18 +159,21 @@ class TimerForm extends React.Component {
 					type="text"
 					name="title"
 					placeholder="Title"
-					value={this.props.title}
+					value={this.state.title}
 				/>
 				<label className="mt-2 text-md text-gray" htmlFor="project">Project</label>
 				<input className="p-2 border border-solid"
 					type="text"
 					name="project"
 					placeholder="Project"
-					value={this.props.project}
+					value={this.state.project}
 				/>
 				<div className="flex">
 					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:shadow-md">{btnText}</button>
-					<button className="w-2/4 p-2 py-1 mt-3 text-red-700 border border-red-700 border-solid gap-2 rounded-md hover:border-red-900 hover:shadow-md">Cancel</button>
+					<button 
+						onClick={() => this.props.handleClick()}
+						className="w-2/4 p-2 py-1 mt-3 text-red-700 border border-red-700 border-solid gap-2 rounded-md hover:border-red-900 hover:shadow-md">Cancel
+					</button>
 				</div>
 			</div>
 		);
