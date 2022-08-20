@@ -6,27 +6,30 @@ import convertToHr from "./helper";
 import { v4 as uuidv4 } from 'uuid';
 
 export default class TimersDashboard extends React.Component {
-	state = {
-		timers: [
-			{
-				title: 'Swimming otters',
-				project: 'Cicus',
-				id: uuidv4(),
-				elapsed: 546792,
-			},
-			{
-				title: 'Wash Raccons',
-				project: 'Racoon federation',
-				id: uuidv4(),
-				elapsed: 446792,
-			},
-			{
-				title: 'slap away',
-				project: 'Angry cats',
-				id: uuidv4(),
-				elapsed: 346792,
-			},
-		]
+	constructor(props) {
+		super(props);
+		this.state = {
+			timers: [
+				{
+					title: 'Swimming otters',
+					project: 'Cicus',
+					id: uuidv4(),
+					elapsed: 546792,
+				},
+				{
+					title: 'Wash Raccons',
+					project: 'Racoon federation',
+					id: uuidv4(),
+					elapsed: 446792,
+				},
+				{
+					title: 'slap away',
+					project: 'Angry cats',
+					id: uuidv4(),
+					elapsed: 346792,
+				},
+			]
+		}
 	}
 	render() {
 		return(
@@ -35,7 +38,7 @@ export default class TimersDashboard extends React.Component {
 				<TimerList 
 					timers={this.state.timers}
 				/>
-				<ToggleableTimerForm isOpen={false} />
+				<ToggleableTimerForm />
 			</div>
 		)
 	}
@@ -61,8 +64,14 @@ class TimerList extends React.Component {
 }
 
 class ToggleableTimerForm extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			isOpen: false,
+		}
+	}
 	render() {
-		if (this.props.isOpen) {
+		if (this.state.isOpen) {
 			return (
 				<TimerForm />
 			)
@@ -77,10 +86,17 @@ class ToggleableTimerForm extends React.Component {
 }
 
 class EditTimer extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			editFormOpen: false,
+		}
+	}
 	render() {
-		if (this.props.editForOpen) {
+		if (this.state.editFormOpen) {
 			return(
-				<TimerForm 
+				<TimerForm
+					id={this.props.id}
 					title={this.props.title}
 					project={this.props.project}
 				/>
@@ -88,6 +104,7 @@ class EditTimer extends React.Component {
 		} else {
 			return(
 				<Timer 
+					id={this.props.id}
 					title={this.props.title}
 					project={this.props.project}
 					elapsed={this.props.elapsed}
