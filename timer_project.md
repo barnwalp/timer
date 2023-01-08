@@ -1,62 +1,68 @@
 ```mermaid
-%%{
-	init: {
-		'theme': 'base', 
-		'themeVariables': { 
-			"fontSize": "40px", 
-			'fontFamily': 'Inter'
-			}
-		}
-	}%%
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '40px', 'fontFamily': 'Inter', 'primaryColor': '#ff0000'}}}%%
   classDiagram
       TimersDashboard --|> TimerList
       TimersDashboard --|> ToggleableTimerForm
       TimerList --|> EditTimer
-      ToggleableTimerForm --|> TimerForm1
+      ToggleableTimerForm --|> TimerForm
       EditTimer --|> Timer
-      EditTimer --|> TimerForm2
+      EditTimer --|> TimerForm
+      
       class TimersDashboard{
-        isOpen;
+      Declared states:
+    	---timer
+    	------title
+    	------project
+    	------id
+    	------elapsed
+    	------editForOpen
+    	handleCreateFormSubmit()
+    	createTimer()
       }
-      class ToggleableTimerForm {
-        isOpen;
-        handleFormOpen()
-        handleFormClose()
+     
+     class TimerList {
+      	Passed props:
+      	---timers
+      }
+     
+     class ToggleableTimerForm {
+     		Declared states:
+        ---isOpen;
+        Passed props:
+        ---fun:handleCreateFormSubmit
+        handleFormToggle()
         handleFormSubmit()
       }
-      class EditTimer {
+     
+     class EditTimer {
+     	Passed props:
+     	---key=timer.id
+     	---id=timer.id
+     	---title=timer.title
+     	---project=timer.project
+     	---elapsed=timer.elapsed
+     	---editForOpen=timer.editFormOpen
       }
-      class EditTimer {
-        title
-        project
-        elapsed
-        runningSince
-        editForOpen
+     
+     class TimerForm{
+     		Declared states:
+     		---title
+     		---project
+				Passed props:
+				---id
+				---title
+				---project
+				---handleClick=fun:handleFormToggle
+				handleTitleChange()
+				handleProjectChange()
+				handleSubmit()
       }
-      class TimerForm1 {
-        this.props.title
-        this.props.project
-        this.onFormSubmit()
-        this.onFormClose()
+     
+     class Timer {
+     		Passed props:
+     		---id
+     		---title
+     		---project
+     		---elapsed
       }
-      class TimerForm2 {
-        this.props.title
-        this.props.project
-        this.onFormSubmit()
-        this.onFormClose()
-      }
-      class Timer {
-        this.props.title
-        this.props.project
-        this.props.elapsed
-        this.props.runningSince
-      }
-
-  class States{
-    isOpen
-    timer_title
-    timer_project
-    timer_elapsed
-    timer_editForOpen
-  }
 ```

@@ -31,26 +31,53 @@ export default class TimersDashboard extends React.Component {
 					elapsed: 346792,
 					editFormOpen: true,
 				},
+				{
+					title: 'Kissing Snakes',
+					project: 'Drunk Gorillas',
+					id: uuidv4(),
+					elapsed: 296792,
+					editFormOpen: false,
+				},
 			]
 		}
 	}
+
+	handleCreateFormSubmit = (timer) => {
+		this.createTimer(timer);
+	};
+
+	createTimer = (timer) => {
+		const newTimer = {
+			title: timer.title,
+			project: timer.project,
+			id: uuidv4(),
+			elapsed: 0,
+			editFormOpen: false,
+		}
+		this.setState({
+			timers: this.state.timers.concat(newTimer), 
+		})
+	}
+
 	render() {
 		return(
 			<div className="max-w-xs mx-auto mt-8 mb-12 font-serif">
 				<h2 className="mx-auto my-5 mb-12 text-3xl font-medium max-w-max after:content-[''] after:w-72 after:h-0.5 after:top-11 after:-left-24 after:absolute relative after:bg-gray-300">Timers</h2>
-				<TimerList 
+				<EditableTimerList 
 					timers={this.state.timers}
 				/>
-				<ToggleableTimerForm />
+				<ToggleableTimerForm 
+					onFormSubmit={this.handleCreateFormSubmit}
+				/>
 			</div>
 		)
 	}
 }
 
-class TimerList extends React.Component {
+class EditableTimerList extends React.Component {
 	render() {
 		const timers = this.props.timers.map((timer) => (
-			<EditTimer
+			<EditableTimer
 				key={timer.id}
 				id={timer.id}
 				title={timer.title}
@@ -74,6 +101,7 @@ class ToggleableTimerForm extends React.Component {
 			isOpen: true,
 		}
 	}
+
 	handleFormToggle = () => {
 		this.setState((curFlag) => {
 			return {
@@ -81,6 +109,12 @@ class ToggleableTimerForm extends React.Component {
 			}
 		});
 	}
+
+	handleFormSubmit = (timer) => {
+		this.props.onFormSubmit(timer);
+		this.setState({isOpen: false});
+	}
+
 	render() {
 		if (this.state.isOpen) {
 			return (
@@ -101,7 +135,7 @@ class ToggleableTimerForm extends React.Component {
 	}
 }
 
-class EditTimer extends React.Component {
+class EditableTimer extends React.Component {
 	render() {
 		if (this.props.editFormOpen) {
 			return(
@@ -149,6 +183,7 @@ class TimerForm extends React.Component {
 			project: this.props.project || '',
 		}
 	}
+
 	handleTitleChange = (e) => {
 		this.setState((timer) => {
 			return({
@@ -157,6 +192,7 @@ class TimerForm extends React.Component {
 			});
 		});
 	}
+
 	handleProjectChange = (e) => {
 		this.setState((timer) => {
 			return({
@@ -165,9 +201,17 @@ class TimerForm extends React.Component {
 			});
 		});
 	}
+
+	handleSubmit = () => {
+		this.props.onFormSubmit({
+			id: this.props.id,
+			title: this.props.title,
+			project: this.props.project,
+		})
+	}
+
 	render() {
-		let btnText;
-		(this.props.title) ? (btnText="Update") : (btnText="Create")
+		const btnText = this.props.id ? 'Update' : 'Create';
 		return (
 			<div className="flex flex-col p-4 mt-3 border border-gray-400 border-solid rounded-md">
 				<label className="text-gray-700 text-md" htmlFor="title">Title</label>
@@ -187,7 +231,9 @@ class TimerForm extends React.Component {
 					onChange={this.handleProjectChange}
 				/>
 				<div className="flex">
-					<button className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:shadow-md">{btnText}</button>
+					<button 
+						onClick={this.handleSubmit}
+						className="w-2/4 p-2 py-1 mt-3 text-blue-700 border border-blue-700 border-solid rounded-md hover:border-blue-900 hover:shadow-md">{btnText}</button>
 					<button 
 						onClick={() => this.props.handleClick()}
 						className="w-2/4 p-2 py-1 mt-3 text-red-700 border border-red-700 border-solid gap-2 rounded-md hover:border-red-900 hover:shadow-md">Cancel
